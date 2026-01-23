@@ -44,7 +44,10 @@ if (!$MXFRM->where && $MXTOTREC < 1) $strSearch = "";
 echo $strSearch;
 ?>
 <div class="wrap-right">
-    <?php echo getPageNav(); ?>
+    <?php
+    // Read-only ledger - hide add, trash, restore actions
+    echo getPageNav('', '', array("add", "trash", "restore"));
+    ?>
     <div class="wrap-data">
         <?php if ($MXTOTREC > 0) {
             $MXCOLS = array(
@@ -71,7 +74,8 @@ echo $strSearch;
             $DB->dbRows();
         ?>
             <table width="100%" border="0" cellspacing="0" cellpadding="8" class="tbl-list">
-                <thead><tr><?php echo getListTitle($MXCOLS); ?></tr></thead>
+                <!-- Read-only audit log - no checkboxes needed -->
+                <thead><tr><?php echo getListTitle($MXCOLS, false); ?></tr></thead>
                 <tbody>
                     <?php foreach ($DB->rows as $d) {
                         // Format date

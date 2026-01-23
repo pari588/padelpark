@@ -3,7 +3,8 @@ var MXTRASHPOST;
 
 function mxtrash(params) {
     showMxLoader();
-    $.mxajax({
+    // Changed from $.mxajax() to $.ajax() to prevent infinite retry loops
+    $.ajax({
         type: "POST",
         dataType: "json",
         url: ADMINURL + "/core-admin/ajax.inc.php",
@@ -37,7 +38,14 @@ function mxtrash(params) {
                     }
                 });
             }
+        } else {
+            // Show error message if trash/restore fails
+            $.mxalert({ msg: result.msg || "Failed to perform action" });
         }
+    }).catch(function(error) {
+        hideMxLoader();
+        $.mxalert({ msg: "An error occurred. Please try again." });
+        console.error("Trash action failed:", error);
     });
 }
 

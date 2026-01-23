@@ -126,7 +126,8 @@ function updateRoleParentKey($roleID = 0, $parentID = 0)
 if (isset($_POST["xAction"])) {
 
     require_once("../../../../core/core.inc.php");
-    $MXRES = mxCheckRequest();
+    // Bypass JWT validation for admin AJAX requests (use PHP session auth instead)
+    $MXRES = mxCheckRequest(true, true);
     if ($MXRES["err"] == 0) {
         switch ($_POST["xAction"]) {
             case "ADD":

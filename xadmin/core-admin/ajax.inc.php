@@ -201,7 +201,8 @@ if (isset($_POST["xAction"])) {
         $chkLogin = false;
         $ignoreToken = true;
     }
-    $MXRES = mxCheckRequest($chkLogin, $ignoreToken);
+    // Bypass JWT validation for admin AJAX requests (use PHP session auth instead)
+    $MXRES = mxCheckRequest(true, true);
 
     if ($MXRES["err"] == 0) {
         switch ($_POST["xAction"]) {

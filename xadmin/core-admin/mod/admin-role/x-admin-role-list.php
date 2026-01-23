@@ -43,7 +43,8 @@ $MXTOTREC = $DB->numRows;
 <script>
     function updateRoleParentKey(result) {
         if (typeof(result.data) !== "undefined") {
-            $.mxajax({
+            // Changed from $.mxajax() to $.ajax() to prevent infinite retry loops
+            $.ajax({
                 url: MODINCURL,
                 type: "POST",
                 data: {
@@ -54,6 +55,8 @@ $MXTOTREC = $DB->numRows;
                 dataType: "json",
             }).then(function(data) {
                 //console.log(data);
+            }).catch(function(error) {
+                console.error("Update parent key failed:", error);
             });
         }
     }
