@@ -1,7 +1,8 @@
 <?php
 /**
- * Sky Padel India - Premium Padel Court Construction
- * Design: Luxury Athletic Noir - Dark, Cinematic, Precision Engineering
+ * Sky Padel India - Premium Client Portal
+ * Design: Midnight Court Club - Cinematic Luxury Sports Aesthetic
+ * Features: Lenis Smooth Scroll, Parallax, GSAP Animations, 3D Effects
  */
 require_once __DIR__ . '/core/config.php';
 
@@ -59,51 +60,77 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_lead'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SITE_NAME; ?> - Premium Padel Court Construction</title>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Sky Padel India designs, manufactures and installs premium padel courts. 1200+ courts worldwide, 5-year warranty.">
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Premium Typography: Clash Display + Cabinet Grotesk -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=cabinet-grotesk@400,500,700&display=swap" rel="stylesheet">
+
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
     <style>
-        /*
-         * ============================================
-         * SKY PADEL INDIA - LUXURY ATHLETIC NOIR
-         * Dark, Cinematic, Precision Engineering
-         * ============================================
-         */
+        /* =====================================================
+           MIDNIGHT COURT CLUB - DESIGN SYSTEM
+           Premium Padel Court Experience
+        ===================================================== */
 
         :root {
-            /* Court Blue - The signature color */
-            --court: #0088cc;
-            --court-light: #00a8e8;
-            --court-dark: #006699;
-            --court-glow: rgba(0, 136, 204, 0.4);
+            /* Noir Foundation */
+            --noir-deep: #030508;
+            --noir-base: #070b12;
+            --noir-elevated: #0d1420;
+            --noir-surface: #131c2e;
+            --noir-glass: rgba(13, 20, 32, 0.85);
 
-            /* Tennis/Padel Ball - From user's CSS */
-            --felt-hi: #f3ff83;
-            --felt: #cfe72a;
-            --felt-lo: #7aa105;
-            --seam: #f4f3ea;
+            /* Court Blue - Electric */
+            --court-blue: #0088cc;
+            --court-blue-bright: #00a8e8;
+            --court-blue-glow: rgba(0, 136, 204, 0.5);
+            --court-blue-subtle: rgba(0, 136, 204, 0.15);
 
-            /* Noir Palette */
-            --void: #050810;
-            --surface: #0a0f1a;
-            --surface-elevated: #111827;
-            --glass: rgba(255, 255, 255, 0.08);
-            --glass-edge: rgba(255, 255, 255, 0.15);
+            /* Turf Green - Victory */
+            --turf-green: #10B981;
+            --turf-green-bright: #34D399;
+            --turf-green-glow: rgba(16, 185, 129, 0.5);
+
+            /* Ball Yellow - Energy */
+            --ball-yellow: #FBBF24;
+            --ball-yellow-bright: #FDE68A;
+            --ball-yellow-glow: rgba(251, 191, 36, 0.6);
+            --ball-gradient: linear-gradient(135deg, #FDE68A 0%, #FBBF24 50%, #F59E0B 100%);
 
             /* Text Hierarchy */
-            --text: #f0f4f8;
-            --text-secondary: #8892a4;
-            --text-tertiary: #4a5568;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --text-accent: var(--ball-yellow);
 
             /* Typography */
-            --font-display: 'Bebas Neue', Impact, sans-serif;
-            --font-body: 'Outfit', system-ui, sans-serif;
+            --font-display: 'Clash Display', 'Bebas Neue', sans-serif;
+            --font-body: 'Cabinet Grotesk', 'Space Grotesk', sans-serif;
+
+            /* Glass Effects */
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shine: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
 
             /* Timing */
-            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
         }
+
+        /* =====================================================
+           BASE RESET & SMOOTH SCROLL
+        ===================================================== */
 
         *, *::before, *::after {
             margin: 0;
@@ -111,450 +138,589 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_lead'])) {
             box-sizing: border-box;
         }
 
+        html.lenis, html.lenis body {
+            height: auto;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+
+        .lenis.lenis-smooth iframe {
+            pointer-events: none;
+        }
+
         html {
-            scroll-behavior: smooth;
+            font-size: 16px;
         }
 
         body {
             font-family: var(--font-body);
-            background: var(--void);
-            color: var(--text);
+            background: var(--noir-deep);
+            color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         ::selection {
-            background: var(--court);
+            background: var(--court-blue);
             color: white;
         }
 
-        /* ============================================
+        /* =====================================================
+           CUSTOM CURSOR
+        ===================================================== */
+
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--ball-yellow);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s var(--ease-out-expo),
+                        opacity 0.15s var(--ease-out-expo),
+                        background 0.15s var(--ease-out-expo);
+            mix-blend-mode: difference;
+        }
+
+        .cursor.hover {
+            transform: scale(2);
+            background: var(--ball-yellow);
+            border-color: var(--ball-yellow);
+        }
+
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--ball-yellow);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* =====================================================
+           LOADING SCREEN
+        ===================================================== */
+
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: var(--noir-deep);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .loader-court {
+            width: 120px;
+            height: 80px;
+            position: relative;
+            border: 3px solid var(--court-blue);
+            border-radius: 4px;
+        }
+
+        .loader-court::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--court-blue);
+            transform: translateX(-50%);
+        }
+
+        .loader-court::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--court-blue);
+            transform: translateY(-50%);
+        }
+
+        .loader-ball {
+            width: 20px;
+            height: 20px;
+            background: var(--ball-gradient);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 30px var(--ball-yellow-glow);
+            animation: ballBounce 1.5s ease-in-out infinite;
+        }
+
+        @keyframes ballBounce {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            25% { transform: translate(200%, -200%) scale(0.8); }
+            50% { transform: translate(-50%, -50%) scale(1); }
+            75% { transform: translate(-200%, 100%) scale(0.8); }
+        }
+
+        .loader-text {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            letter-spacing: 0.3em;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .loader-progress {
+            width: 200px;
+            height: 2px;
+            background: var(--noir-surface);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .loader-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--court-blue), var(--turf-green), var(--ball-yellow));
+            width: 0%;
+            animation: loadProgress 2s var(--ease-out-expo) forwards;
+        }
+
+        @keyframes loadProgress {
+            to { width: 100%; }
+        }
+
+        /* =====================================================
            NAVIGATION
-        ============================================ */
+        ===================================================== */
+
         .nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 20px 40px;
+            padding: 24px 48px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.4s var(--ease-out);
+            transition: all 0.5s var(--ease-out-expo);
         }
 
         .nav.scrolled {
-            background: rgba(5, 8, 16, 0.9);
-            backdrop-filter: blur(20px);
-            padding: 14px 40px;
-            border-bottom: 1px solid var(--glass);
+            padding: 16px 48px;
+            background: var(--noir-glass);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .nav-logo {
-            height: 42px;
-            transition: transform 0.3s var(--ease-out);
+            height: 44px;
+            transition: transform 0.4s var(--ease-out-expo);
         }
 
         .nav-logo:hover {
             transform: scale(1.05);
         }
 
-        .nav-actions {
+        .nav-links {
             display: flex;
-            gap: 12px;
             align-items: center;
+            gap: 8px;
         }
 
         .nav-link {
-            font-size: 14px;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
             font-weight: 500;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            transition: all 0.3s var(--ease-out);
-        }
-
-        .nav-link-ghost {
             color: var(--text-secondary);
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 100px;
+            transition: all 0.3s var(--ease-out-expo);
+            position: relative;
         }
 
-        .nav-link-ghost:hover {
-            color: var(--text);
-            background: var(--glass);
+        .nav-link:hover {
+            color: var(--text-primary);
         }
 
-        .nav-link-primary {
-            background: var(--court);
-            color: white;
+        .nav-link.primary {
+            background: var(--ball-gradient);
+            color: var(--noir-deep);
             font-weight: 600;
         }
 
-        .nav-link-primary:hover {
-            background: var(--court-light);
+        .nav-link.primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px var(--court-glow);
+            box-shadow: 0 10px 40px var(--ball-yellow-glow);
         }
 
-        /* ============================================
-           HERO SECTION
-        ============================================ */
+        /* =====================================================
+           HERO SECTION - CINEMATIC PARALLAX
+        ===================================================== */
+
         .hero {
             min-height: 100vh;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
             position: relative;
+            display: flex;
+            align-items: center;
             overflow: hidden;
         }
 
-        /* Atmospheric Background */
-        .hero::before {
-            content: '';
+        /* Parallax Background Layers */
+        .hero-bg {
             position: absolute;
             inset: 0;
-            background:
-                radial-gradient(ellipse 80% 50% at 70% 50%, rgba(0, 136, 204, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse 60% 40% at 30% 60%, rgba(207, 231, 42, 0.04) 0%, transparent 40%);
-            pointer-events: none;
+            z-index: 0;
         }
 
-        /* Subtle Grid */
-        .hero-grid {
+        .parallax-layer {
             position: absolute;
             inset: 0;
+            will-change: transform;
+        }
+
+        /* Deep space gradient */
+        .parallax-gradient {
+            background:
+                radial-gradient(ellipse 100% 100% at 20% 80%, rgba(0, 136, 204, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 80% 80% at 80% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 60% at 50% 100%, rgba(251, 191, 36, 0.08) 0%, transparent 40%),
+                var(--noir-deep);
+        }
+
+        /* Court lines pattern - abstract */
+        .parallax-court-lines {
+            opacity: 0.04;
             background-image:
-                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 80px 80px;
-            mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black, transparent);
+                linear-gradient(90deg, var(--text-primary) 1px, transparent 1px),
+                linear-gradient(0deg, var(--text-primary) 1px, transparent 1px);
+            background-size: 100px 100px;
+            transform: perspective(1000px) rotateX(60deg) translateY(100px);
+            transform-origin: center bottom;
         }
 
-        /* ============================================
-           CSS TENNIS BALLS
-           User's exact design: Single Arc + Fuzz
-        ============================================ */
-        .ball {
-            --size: 80px;
-            width: var(--size);
-            aspect-ratio: 1;
-            border-radius: 50%;
+        /* Animated grid */
+        .parallax-grid {
+            background-image:
+                linear-gradient(rgba(0, 136, 204, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 136, 204, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridPulse 10s ease-in-out infinite;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Stadium light beams */
+        .light-beam {
             position: absolute;
-            z-index: 5;
+            width: 300px;
+            height: 150vh;
+            background: linear-gradient(180deg,
+                rgba(255, 255, 255, 0.03) 0%,
+                transparent 100%);
+            transform-origin: top center;
+            pointer-events: none;
+        }
+
+        .light-beam-1 {
+            left: 10%;
+            top: -50%;
+            transform: rotate(-15deg);
+            animation: beamSway 8s ease-in-out infinite;
+        }
+
+        .light-beam-2 {
+            right: 15%;
+            top: -50%;
+            transform: rotate(20deg);
+            animation: beamSway 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes beamSway {
+            0%, 100% { transform: rotate(-15deg); }
+            50% { transform: rotate(-10deg); }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: absolute;
+            inset: 0;
             overflow: hidden;
-
-            background:
-                /* Highlight */
-                radial-gradient(60% 60% at 30% 25%,
-                    rgba(255,255,255,.9) 0%,
-                    rgba(255,255,255,.25) 30%,
-                    rgba(255,255,255,0) 55%),
-                /* Shadow */
-                radial-gradient(95% 95% at 70% 75%,
-                    rgba(0,0,0,.45) 0%,
-                    rgba(0,0,0,0) 55%),
-                /* Felt */
-                radial-gradient(circle at 45% 40%,
-                    var(--felt-hi) 0%,
-                    var(--felt) 45%,
-                    var(--felt-lo) 100%);
-
-            box-shadow:
-                inset 0 -20px 30px rgba(0,0,0,.25),
-                0 20px 40px rgba(0,0,0,.4),
-                0 0 60px rgba(207, 231, 42, 0.2);
-        }
-
-        /* Single Arc Seam */
-        .ball::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
             pointer-events: none;
-
-            background: radial-gradient(
-                closest-side,
-                rgba(0,0,0,0) 0%,
-                rgba(0,0,0,0) 58%,
-                /* Groove shadow */
-                rgba(0,0,0,.14) 58.6%,
-                rgba(0,0,0,0) 59.3%,
-                /* White seam */
-                var(--seam) 59.3%,
-                var(--seam) 63.3%,
-                rgba(244,243,234,0) 64.0%,
-                rgba(0,0,0,0) 100%
-            );
-
-            background-size: 130% 130%;
-            background-position: -26% 50%;
-            background-repeat: no-repeat;
-            transform: rotate(-18deg);
         }
 
-        /* Fuzz / Felt Texture */
-        .ball::after {
-            content: "";
+        .particle {
             position: absolute;
-            inset: 0;
+            width: 4px;
+            height: 4px;
+            background: var(--ball-yellow);
             border-radius: 50%;
-            pointer-events: none;
-            opacity: .45;
-            mix-blend-mode: overlay;
-
-            background:
-                radial-gradient(circle at 18% 32%, rgba(255,255,255,.14) 0 1px, transparent 2px),
-                radial-gradient(circle at 32% 54%, rgba(0,0,0,.12) 0 1px, transparent 2px),
-                radial-gradient(circle at 46% 38%, rgba(255,255,255,.12) 0 1px, transparent 2px),
-                radial-gradient(circle at 58% 62%, rgba(0,0,0,.12) 0 1px, transparent 2px),
-                radial-gradient(circle at 70% 42%, rgba(255,255,255,.10) 0 1px, transparent 2px),
-                radial-gradient(circle at 82% 68%, rgba(0,0,0,.12) 0 1px, transparent 2px);
-            background-size: 18px 18px;
+            opacity: 0;
+            animation: particleFloat 15s linear infinite;
         }
 
-        .ball-1 {
-            --size: 100px;
-            top: 10%;
-            left: 5%;
-            animation: float1 6s ease-in-out infinite;
+        @keyframes particleFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) scale(0);
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) scale(1);
+            }
         }
 
-        .ball-2 {
-            --size: 55px;
-            top: 65%;
-            left: 28%;
-            animation: float2 5s ease-in-out infinite 0.5s;
-        }
-
-        .ball-3 {
-            --size: 40px;
-            top: 18%;
-            right: 10%;
-            animation: float3 5.5s ease-in-out infinite 1s;
-        }
-
-        .ball-4 {
-            --size: 70px;
-            bottom: 15%;
-            right: 5%;
-            animation: float1 7s ease-in-out infinite 1.5s;
-        }
-
-        @keyframes float1 {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-        }
-
-        @keyframes float2 {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(8px, -15px); }
-        }
-
-        @keyframes float3 {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-25px) scale(1.03); }
-        }
-
-        /* ============================================
-           HERO CONTENT - Left Side
-        ============================================ */
+        /* Hero Content */
         .hero-content {
             position: relative;
             z-index: 10;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 120px 60px 80px 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
         }
 
+        .hero-text {
+            padding-top: 80px;
+        }
+
+        /* Tagline Badge */
         .hero-badge {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 8px 16px;
-            background: var(--glass);
-            border: 1px solid var(--glass-edge);
+            gap: 12px;
+            padding: 10px 20px;
+            background: var(--noir-glass);
+            border: 1px solid var(--glass-border);
             border-radius: 100px;
-            font-size: 12px;
+            font-size: 0.8rem;
             font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
             color: var(--text-secondary);
-            width: fit-content;
-            margin-bottom: 28px;
+            margin-bottom: 32px;
+            backdrop-filter: blur(10px);
             opacity: 0;
-            animation: fadeUp 0.8s var(--ease-out) 0.2s forwards;
+            transform: translateY(20px);
         }
 
-        .hero-badge-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--felt);
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--ball-yellow);
             border-radius: 50%;
-            animation: pulse 2s infinite;
+            animation: dotPulse 2s ease-in-out infinite;
+            box-shadow: 0 0 15px var(--ball-yellow-glow);
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.2); }
+        @keyframes dotPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
         }
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        /* Main Headline */
         .hero-title {
             font-family: var(--font-display);
             font-size: clamp(3.5rem, 8vw, 7rem);
-            line-height: 0.92;
-            letter-spacing: -0.01em;
-            text-transform: uppercase;
+            font-weight: 600;
+            line-height: 0.95;
+            letter-spacing: -0.02em;
             margin-bottom: 28px;
         }
 
-        .hero-title-line {
+        .title-line {
             display: block;
-            opacity: 0;
-            animation: titleSlide 0.9s var(--ease-out) forwards;
+            overflow: hidden;
         }
 
-        .hero-title-line:nth-child(1) { animation-delay: 0.3s; }
-        .hero-title-line:nth-child(2) { animation-delay: 0.4s; }
-        .hero-title-line:nth-child(3) { animation-delay: 0.5s; }
-
-        @keyframes titleSlide {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
+        .title-line-inner {
+            display: block;
+            transform: translateY(100%);
         }
 
-        .hero-title-accent {
-            background: linear-gradient(135deg, var(--felt-hi) 0%, var(--felt) 60%, var(--court-light) 100%);
+        .title-accent {
+            background: linear-gradient(135deg,
+                var(--ball-yellow-bright) 0%,
+                var(--ball-yellow) 40%,
+                var(--turf-green-bright) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
+        .title-outline {
+            -webkit-text-stroke: 1px var(--text-secondary);
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Subtitle */
         .hero-subtitle {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             font-weight: 400;
             color: var(--text-secondary);
-            max-width: 420px;
+            max-width: 480px;
             line-height: 1.7;
             margin-bottom: 40px;
             opacity: 0;
-            animation: fadeUp 0.8s var(--ease-out) 0.6s forwards;
+            transform: translateY(20px);
         }
 
+        /* Stats Row */
         .hero-stats {
             display: flex;
-            gap: 40px;
+            gap: 48px;
             opacity: 0;
-            animation: fadeUp 0.8s var(--ease-out) 0.7s forwards;
+            transform: translateY(20px);
         }
 
-        .stat {
+        .stat-item {
             position: relative;
         }
 
-        .stat::after {
+        .stat-item::after {
             content: '';
             position: absolute;
-            right: -20px;
+            right: -24px;
             top: 50%;
             transform: translateY(-50%);
             width: 1px;
-            height: 40px;
-            background: linear-gradient(180deg, transparent, var(--glass-edge), transparent);
+            height: 50px;
+            background: linear-gradient(180deg, transparent, var(--glass-border), transparent);
         }
 
-        .stat:last-child::after { display: none; }
+        .stat-item:last-child::after {
+            display: none;
+        }
 
         .stat-value {
             font-family: var(--font-display);
-            font-size: 3rem;
+            font-size: 3.5rem;
+            font-weight: 600;
             line-height: 1;
-            color: var(--text);
+            background: linear-gradient(135deg, var(--text-primary), var(--court-blue-bright));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .stat-label {
             font-size: 0.7rem;
-            color: var(--text-tertiary);
+            font-weight: 500;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
-            margin-top: 6px;
+            color: var(--text-muted);
+            margin-top: 8px;
         }
 
-        /* ============================================
-           3D PADEL COURT - Sketchfab Viewer API
-           Seamlessly integrated with site design
-        ============================================ */
+        /* =====================================================
+           3D COURT VISUALIZATION
+        ===================================================== */
+
         .hero-visual {
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100%;
-            padding: 20px;
+            perspective: 1000px;
         }
 
-        .court-viewer-wrapper {
+        .court-3d-wrapper {
             position: relative;
-            width: 100%;
-            max-width: 700px;
+            transform-style: preserve-3d;
+            transform: rotateX(10deg) rotateY(-5deg);
+            transition: transform 0.5s var(--ease-out-expo);
         }
 
-        /* Ambient glow behind the viewer */
+        .court-3d-wrapper:hover {
+            transform: rotateX(5deg) rotateY(0deg);
+        }
+
+        /* Glow behind court */
         .court-glow {
             position: absolute;
-            width: 80%;
-            height: 60%;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background: radial-gradient(ellipse, var(--court-glow) 0%, transparent 70%);
+            width: 120%;
+            height: 120%;
+            left: -10%;
+            top: -10%;
+            background: radial-gradient(ellipse at center, var(--court-blue-glow) 0%, transparent 60%);
             filter: blur(60px);
-            pointer-events: none;
-            z-index: 0;
+            opacity: 0.6;
+            animation: glowPulse 4s ease-in-out infinite;
         }
 
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        /* Court Container */
         .court-container {
             position: relative;
             width: 100%;
             aspect-ratio: 4 / 3;
+            background: linear-gradient(145deg, var(--noir-surface), var(--noir-elevated));
             border-radius: 20px;
+            border: 1px solid var(--glass-border);
             overflow: hidden;
-            z-index: 1;
-            background: linear-gradient(145deg, rgba(10,15,26,0.8), rgba(5,8,16,0.95));
-            border: 1px solid var(--glass-edge);
+            box-shadow:
+                0 50px 100px -20px rgba(0, 0, 0, 0.5),
+                0 0 0 1px var(--glass-border) inset,
+                0 0 80px var(--court-blue-subtle);
         }
 
-        .court-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-
-        /* Loading state */
         .court-container::before {
             content: '';
             position: absolute;
             inset: 0;
-            background:
-                radial-gradient(circle at 30% 40%, var(--court-glow) 0%, transparent 50%),
-                var(--surface);
-            z-index: -1;
+            background: var(--glass-shine);
+            pointer-events: none;
+            z-index: 10;
         }
 
+        /* Sketchfab iframe */
+        .court-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Loading state */
         .court-loading {
             position: absolute;
             inset: 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: var(--surface);
-            z-index: 2;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            gap: 20px;
+            background: var(--noir-elevated);
+            z-index: 5;
+            transition: opacity 0.5s, visibility 0.5s;
         }
 
         .court-loading.hidden {
@@ -565,8 +731,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_lead'])) {
         .court-loading-spinner {
             width: 50px;
             height: 50px;
-            border: 3px solid var(--glass-edge);
-            border-top-color: var(--court-light);
+            border: 3px solid var(--noir-surface);
+            border-top-color: var(--court-blue-bright);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -575,316 +741,583 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_lead'])) {
             to { transform: rotate(360deg); }
         }
 
-        /* Caption below viewer */
         .court-caption {
             text-align: center;
-            margin-top: 16px;
+            margin-top: 20px;
             font-size: 0.85rem;
-            color: var(--text-tertiary);
+            color: var(--text-muted);
         }
 
         .court-caption span {
-            color: var(--court-light);
+            color: var(--court-blue-bright);
         }
 
-        /* ============================================
-           FORM SECTION
-        ============================================ */
-        .form-section {
-            padding: 100px 40px;
-            background: linear-gradient(180deg, var(--void) 0%, var(--surface) 100%);
+        /* =====================================================
+           FLOATING PADEL BALLS
+        ===================================================== */
+
+        .floating-ball {
+            position: absolute;
+            border-radius: 50%;
+            z-index: 20;
+            pointer-events: none;
         }
 
-        .form-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 60px;
-            align-items: center;
+        .ball-sphere {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+            background:
+                radial-gradient(ellipse 70% 70% at 30% 25%, rgba(255,255,255,0.9) 0%, transparent 50%),
+                radial-gradient(ellipse 90% 90% at 70% 75%, rgba(0,0,0,0.4) 0%, transparent 50%),
+                radial-gradient(circle at 40% 35%, #FDE68A 0%, #FBBF24 40%, #F59E0B 100%);
+            box-shadow:
+                0 20px 60px var(--ball-yellow-glow),
+                inset 0 -10px 30px rgba(0,0,0,0.2);
         }
 
-        .form-intro h2 {
-            font-family: var(--font-display);
-            font-size: clamp(2.5rem, 5vw, 4rem);
+        /* Ball seam line */
+        .ball-sphere::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: radial-gradient(
+                closest-side,
+                transparent 58%,
+                rgba(255,255,255,0.1) 59%,
+                rgba(255,255,255,0.8) 60%,
+                rgba(255,255,255,0.8) 64%,
+                transparent 65%
+            );
+            background-size: 130% 130%;
+            background-position: -20% 50%;
+            transform: rotate(-20deg);
+        }
+
+        /* Felt texture */
+        .ball-sphere::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            opacity: 0.4;
+            mix-blend-mode: overlay;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        .ball-1 {
+            width: 100px;
+            height: 100px;
+            top: 8%;
+            left: 5%;
+            animation: floatBall1 8s ease-in-out infinite;
+        }
+
+        .ball-2 {
+            width: 60px;
+            height: 60px;
+            top: 70%;
+            left: 25%;
+            animation: floatBall2 10s ease-in-out infinite 1s;
+        }
+
+        .ball-3 {
+            width: 45px;
+            height: 45px;
+            top: 15%;
+            right: 8%;
+            animation: floatBall3 9s ease-in-out infinite 2s;
+        }
+
+        .ball-4 {
+            width: 70px;
+            height: 70px;
+            bottom: 10%;
+            right: 5%;
+            animation: floatBall1 11s ease-in-out infinite 1.5s;
+        }
+
+        @keyframes floatBall1 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(15px, -25px) rotate(90deg); }
+            50% { transform: translate(0, -10px) rotate(180deg); }
+            75% { transform: translate(-15px, -20px) rotate(270deg); }
+        }
+
+        @keyframes floatBall2 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(20px, -30px) rotate(180deg); }
+        }
+
+        @keyframes floatBall3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-15px, 25px) scale(1.05); }
+        }
+
+        /* =====================================================
+           FEATURES SECTION
+        ===================================================== */
+
+        .features {
+            padding: 160px 60px;
+            position: relative;
+            background: var(--noir-base);
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--court-blue-subtle), transparent);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 80px;
+        }
+
+        .section-eyebrow {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.3em;
             text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        .form-intro h2 span {
-            color: var(--court-light);
-        }
-
-        .form-intro p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            max-width: 380px;
-        }
-
-        .form-features {
-            margin-top: 36px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .form-feature {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .form-feature-icon {
-            width: 36px;
-            height: 36px;
-            background: var(--glass);
-            border: 1px solid var(--glass-edge);
-            border-radius: 8px;
+            color: var(--court-blue-bright);
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
+            gap: 16px;
         }
 
-        .form-feature-icon svg {
-            width: 18px;
-            height: 18px;
-            stroke: var(--court-light);
+        .section-eyebrow::before,
+        .section-eyebrow::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--court-blue);
         }
 
-        .form-card {
-            background: var(--surface-elevated);
-            border: 1px solid var(--glass-edge);
-            border-radius: 16px;
-            padding: 36px;
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .section-title span {
+            background: linear-gradient(135deg, var(--court-blue-bright), var(--turf-green-bright));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Feature Cards Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--noir-elevated);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
             position: relative;
+            overflow: hidden;
+            transition: all 0.5s var(--ease-out-expo);
+            opacity: 0;
+            transform: translateY(40px);
         }
 
-        .form-card::before {
+        .feature-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, var(--court), var(--felt), var(--court-light));
-            border-radius: 16px 16px 0 0;
+            background: linear-gradient(90deg, var(--court-blue), var(--turf-green));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle at center, var(--court-blue-subtle) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--court-blue);
+            box-shadow: 0 30px 80px -20px rgba(0, 136, 204, 0.3);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover::after {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--court-blue-subtle), var(--turf-green-glow));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .feature-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--court-blue-bright);
+        }
+
+        /* Ball accent on icon */
+        .feature-icon::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 18px;
+            height: 18px;
+            background: var(--ball-gradient);
+            border-radius: 50%;
+            box-shadow: 0 4px 15px var(--ball-yellow-glow);
+        }
+
+        .feature-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* =====================================================
+           QUOTE FORM SECTION
+        ===================================================== */
+
+        .quote-section {
+            padding: 160px 60px;
+            position: relative;
+            background: linear-gradient(180deg, var(--noir-base) 0%, var(--noir-deep) 100%);
+            overflow: hidden;
+        }
+
+        /* Court lines decoration */
+        .quote-court-lines {
+            position: absolute;
+            inset: 0;
+            opacity: 0.02;
+            background:
+                linear-gradient(90deg, var(--text-primary) 2px, transparent 2px),
+                linear-gradient(var(--text-primary) 2px, transparent 2px);
+            background-size: 100px 100px;
+            background-position: center center;
+        }
+
+        .quote-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .quote-intro {
+            opacity: 0;
+            transform: translateX(-40px);
+        }
+
+        .quote-tagline {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--ball-yellow);
+            margin-bottom: 20px;
+        }
+
+        .quote-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 600;
+            line-height: 0.95;
+            margin-bottom: 24px;
+        }
+
+        .quote-title span {
+            background: linear-gradient(135deg, var(--court-blue-bright), var(--turf-green-bright));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .quote-desc {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        /* Feature list */
+        .quote-features {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .quote-feature {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .quote-feature-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--noir-glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .quote-feature-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--turf-green-bright);
+        }
+
+        /* Glass Form Card */
+        .quote-form-card {
+            background: var(--noir-glass);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 48px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateX(40px);
+        }
+
+        .quote-form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--court-blue), var(--ball-yellow), var(--turf-green));
+        }
+
+        /* Floating ball decoration */
+        .quote-form-card::after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            bottom: -40px;
+            right: -40px;
+            background: radial-gradient(circle, var(--ball-yellow-glow) 0%, transparent 70%);
+            opacity: 0.3;
+            filter: blur(40px);
+        }
+
+        .form-header {
+            margin-bottom: 32px;
         }
 
         .form-title {
             font-family: var(--font-display);
-            font-size: 1.5rem;
-            margin-bottom: 6px;
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 8px;
         }
 
         .form-subtitle {
-            color: var(--text-tertiary);
             font-size: 0.9rem;
-            margin-bottom: 28px;
+            color: var(--text-muted);
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px;
+            gap: 20px;
         }
 
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
-        .form-group.full {
+        .form-group.full-width {
             grid-column: 1 / -1;
         }
 
         .form-label {
             display: block;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             font-weight: 600;
-            text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: var(--text-tertiary);
-            margin-bottom: 8px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 10px;
         }
 
         .form-input,
         .form-select,
         .form-textarea {
             width: 100%;
-            padding: 14px 16px;
+            padding: 16px 20px;
             font-family: var(--font-body);
-            font-size: 0.9rem;
-            color: var(--text);
-            background: var(--surface);
-            border: 1px solid var(--glass-edge);
-            border-radius: 8px;
-            transition: all 0.3s var(--ease-out);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            background: var(--noir-elevated);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            transition: all 0.3s var(--ease-out-expo);
         }
 
         .form-input::placeholder {
-            color: var(--text-tertiary);
+            color: var(--text-muted);
         }
 
         .form-input:focus,
         .form-select:focus,
         .form-textarea:focus {
             outline: none;
-            border-color: var(--court);
-            box-shadow: 0 0 0 3px var(--court-glow);
+            border-color: var(--court-blue);
+            box-shadow: 0 0 0 4px var(--court-blue-subtle);
         }
 
         .form-select {
             cursor: pointer;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%234a5568' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 14px center;
+            background-position: right 16px center;
         }
 
         .form-textarea {
-            min-height: 90px;
+            min-height: 100px;
             resize: vertical;
         }
 
         .btn-submit {
             width: 100%;
-            padding: 16px;
+            padding: 18px 32px;
             font-family: var(--font-body);
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 600;
-            color: var(--void);
-            background: linear-gradient(135deg, var(--felt-hi) 0%, var(--felt) 100%);
+            color: var(--noir-deep);
+            background: var(--ball-gradient);
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s var(--ease-out);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s var(--ease-out-expo);
         }
 
         .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(207, 231, 42, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px var(--ball-yellow-glow);
         }
 
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        /* Alert styles */
         .alert {
-            padding: 14px 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            font-size: 0.95rem;
         }
 
         .alert-success {
             background: rgba(16, 185, 129, 0.15);
             border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #10b981;
+            color: var(--turf-green-bright);
         }
 
         .alert-error {
             background: rgba(239, 68, 68, 0.15);
             border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
+            color: #f87171;
         }
 
-        /* ============================================
-           FEATURES SECTION
-        ============================================ */
-        .features {
-            padding: 100px 40px;
-            background: var(--surface);
-        }
-
-        .features-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .features-header h2 {
-            font-family: var(--font-display);
-            font-size: clamp(2rem, 4vw, 3.5rem);
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
-        .features-header h2 span {
-            background: linear-gradient(135deg, var(--court), var(--court-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .features-header p {
-            color: var(--text-secondary);
-            max-width: 460px;
-            margin: 0 auto;
-        }
-
-        .features-grid {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .feature-card {
-            background: var(--surface-elevated);
-            border: 1px solid var(--glass-edge);
-            border-radius: 12px;
-            padding: 32px;
-            transition: all 0.4s var(--ease-out);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 40px -15px rgba(0,136,204,0.2);
-            border-color: var(--court);
-        }
-
-        .feature-icon {
-            width: 52px;
-            height: 52px;
-            background: var(--glass);
-            border: 1px solid var(--glass-edge);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .feature-icon svg {
-            width: 24px;
-            height: 24px;
-            stroke: var(--court-light);
-        }
-
-        .feature-title {
-            font-family: var(--font-display);
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-        }
-
-        .feature-desc {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.7;
-        }
-
-        /* ============================================
+        /* =====================================================
            FOOTER
-        ============================================ */
+        ===================================================== */
+
         .footer {
-            padding: 50px 40px;
-            background: var(--void);
-            border-top: 1px solid var(--glass);
+            padding: 60px;
+            background: var(--noir-deep);
+            border-top: 1px solid var(--glass-border);
         }
 
         .footer-content {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -892,246 +1325,479 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_lead'])) {
         }
 
         .footer-logo {
-            height: 32px;
+            height: 36px;
             opacity: 0.7;
             transition: opacity 0.3s;
         }
 
-        .footer-logo:hover { opacity: 1; }
+        .footer-logo:hover {
+            opacity: 1;
+        }
 
         .footer-links {
             display: flex;
-            gap: 28px;
+            gap: 32px;
         }
 
         .footer-link {
-            color: var(--text-tertiary);
+            font-size: 0.9rem;
+            color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.85rem;
             transition: color 0.3s;
         }
 
-        .footer-link:hover { color: var(--felt); }
-
-        .footer-copy {
-            color: var(--text-tertiary);
-            font-size: 0.8rem;
+        .footer-link:hover {
+            color: var(--ball-yellow);
         }
 
-        /* ============================================
-           RESPONSIVE
-        ============================================ */
-        @media (max-width: 1024px) {
-            .hero {
-                grid-template-columns: 1fr;
-            }
+        .footer-copy {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
 
+        /* =====================================================
+           RESPONSIVE DESIGN
+        ===================================================== */
+
+        @media (max-width: 1200px) {
             .hero-content {
-                padding: 130px 40px 60px;
+                grid-template-columns: 1fr;
+                gap: 60px;
                 text-align: center;
             }
 
-            .hero-badge { margin: 0 auto 28px; }
-            .hero-subtitle { margin: 0 auto 40px; }
-            .hero-stats { justify-content: center; }
+            .hero-text {
+                order: 1;
+            }
 
             .hero-visual {
-                min-height: 340px;
+                order: 2;
+                max-width: 600px;
+                margin: 0 auto;
             }
 
-            .court-wrapper {
-                transform: scale(0.9);
+            .hero-badge {
+                margin: 0 auto 32px;
             }
 
-            .form-container {
-                grid-template-columns: 1fr;
-                gap: 40px;
+            .hero-subtitle {
+                margin: 0 auto 40px;
             }
 
-            .form-intro { text-align: center; }
-            .form-intro p { margin: 0 auto; }
-            .form-features { align-items: center; }
+            .hero-stats {
+                justify-content: center;
+            }
 
             .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .quote-container {
                 grid-template-columns: 1fr;
-                max-width: 420px;
+                gap: 60px;
+            }
+
+            .quote-intro {
+                text-align: center;
+            }
+
+            .quote-features {
+                align-items: center;
             }
         }
 
         @media (max-width: 768px) {
-            .nav { padding: 16px 20px; }
-            .nav-link-ghost { display: none; }
+            .nav {
+                padding: 16px 24px;
+            }
 
-            .hero-content { padding: 110px 24px 50px; }
-            .hero-title { font-size: 2.8rem; }
+            .nav-link:not(.primary) {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 100px;
+            }
+
+            .hero-content {
+                padding: 0 24px;
+            }
+
+            .hero-title {
+                font-size: 2.8rem;
+            }
 
             .hero-stats {
                 flex-direction: column;
-                gap: 20px;
+                gap: 24px;
             }
 
-            .stat::after { display: none; }
+            .stat-item::after {
+                display: none;
+            }
 
-            .form-section, .features { padding: 70px 20px; }
-            .form-card { padding: 28px; }
-            .form-row { grid-template-columns: 1fr; }
+            .features,
+            .quote-section {
+                padding: 100px 24px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .quote-form-card {
+                padding: 32px;
+            }
 
             .footer-content {
                 flex-direction: column;
-                gap: 20px;
+                gap: 24px;
                 text-align: center;
             }
 
-            .ball-1, .ball-4 { display: none; }
-
-            .court-wrapper {
-                transform: scale(0.75);
+            .ball-1, .ball-4 {
+                display: none;
             }
 
-            .hero-visual {
-                min-height: 300px;
+            .cursor, .cursor-dot {
+                display: none;
             }
         }
 
         @media (max-width: 480px) {
-            .hero-title { font-size: 2.4rem; }
-
-            .court-wrapper {
-                transform: scale(0.6);
+            .hero-title {
+                font-size: 2.2rem;
             }
 
-            .hero-visual {
-                min-height: 260px;
+            .stat-value {
+                font-size: 2.5rem;
             }
 
-            .ball-2, .ball-3 { display: none; }
+            .ball-2, .ball-3 {
+                display: none;
+            }
+        }
+
+        /* =====================================================
+           SCROLL REVEAL ANIMATIONS
+        ===================================================== */
+
+        [data-reveal] {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+        }
+
+        [data-reveal].revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        [data-reveal="left"] {
+            transform: translateX(-40px);
+        }
+
+        [data-reveal="left"].revealed {
+            transform: translateX(0);
+        }
+
+        [data-reveal="right"] {
+            transform: translateX(40px);
+        }
+
+        [data-reveal="right"].revealed {
+            transform: translateX(0);
+        }
+
+        [data-reveal="scale"] {
+            transform: scale(0.9);
+        }
+
+        [data-reveal="scale"].revealed {
+            transform: scale(1);
         }
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-court">
+            <div class="loader-ball"></div>
+        </div>
+        <span class="loader-text">Loading Experience</span>
+        <div class="loader-progress">
+            <div class="loader-progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
     <!-- Navigation -->
     <nav class="nav" id="nav">
         <a href="<?php echo SITE_URL; ?>">
             <img src="https://cdn.prod.website-files.com/66c705c26941f009cfd3255f/66c70de3185822b627ec80ac_SKYPADEL_INDIA_LOGO.png" alt="Sky Padel India" class="nav-logo">
         </a>
-        <div class="nav-actions">
-            <a href="#quote" class="nav-link nav-link-ghost">Get Quote</a>
-            <a href="<?php echo SITE_URL; ?>/login.php" class="nav-link nav-link-primary">Client Portal</a>
+        <div class="nav-links">
+            <a href="#features" class="nav-link">Why Us</a>
+            <a href="#quote" class="nav-link">Get Quote</a>
+            <a href="<?php echo SITE_URL; ?>/login.php" class="nav-link primary">Client Portal</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-grid"></div>
+    <section class="hero" id="hero">
+        <!-- Parallax Background -->
+        <div class="hero-bg">
+            <div class="parallax-layer parallax-gradient" data-speed="0.1"></div>
+            <div class="parallax-layer parallax-court-lines" data-speed="0.2"></div>
+            <div class="parallax-layer parallax-grid" data-speed="0.15"></div>
 
-        <!-- Tennis Balls - User's CSS design -->
-        <div class="ball ball-1" aria-hidden="true"></div>
-        <div class="ball ball-2" aria-hidden="true"></div>
-        <div class="ball ball-3" aria-hidden="true"></div>
-        <div class="ball ball-4" aria-hidden="true"></div>
+            <!-- Stadium Light Beams -->
+            <div class="light-beam light-beam-1"></div>
+            <div class="light-beam light-beam-2"></div>
 
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span class="hero-badge-dot"></span>
-                India's Leading Padel Court Builder
-            </div>
-
-            <h1 class="hero-title">
-                <span class="hero-title-line">Build Your</span>
-                <span class="hero-title-line hero-title-accent">Premium</span>
-                <span class="hero-title-line">Padel Court</span>
-            </h1>
-
-            <p class="hero-subtitle">
-                From architectural design to turnkey installation, we deliver world-class
-                padel facilities with FIP certification and 5-year warranty.
-            </p>
-
-            <div class="hero-stats">
-                <div class="stat">
-                    <div class="stat-value">1200+</div>
-                    <div class="stat-label">Courts Worldwide</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">50+</div>
-                    <div class="stat-label">Countries</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value">5yr</div>
-                    <div class="stat-label">Warranty</div>
-                </div>
-            </div>
+            <!-- Floating Particles -->
+            <div class="particles" id="particles"></div>
         </div>
 
-        <!-- 3D Padel Court - Sketchfab Viewer API Integration -->
-        <div class="hero-visual">
-            <div class="court-viewer-wrapper">
-                <div class="court-glow"></div>
-                <div class="court-container">
-                    <div class="court-loading" id="courtLoading">
-                        <div class="court-loading-spinner"></div>
-                    </div>
-                    <iframe
-                        id="sketchfab-viewer"
-                        title="Padel Court 3D Model"
-                        allow="autoplay; fullscreen; xr-spatial-tracking"
-                        allowfullscreen
-                        mozallowfullscreen="true"
-                        webkitallowfullscreen="true">
-                    </iframe>
+        <!-- Floating Padel Balls -->
+        <div class="floating-ball ball-1" data-speed="0.3">
+            <div class="ball-sphere"></div>
+        </div>
+        <div class="floating-ball ball-2" data-speed="0.4">
+            <div class="ball-sphere"></div>
+        </div>
+        <div class="floating-ball ball-3" data-speed="0.25">
+            <div class="ball-sphere"></div>
+        </div>
+        <div class="floating-ball ball-4" data-speed="0.35">
+            <div class="ball-sphere"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge" id="heroBadge">
+                    <span class="badge-dot"></span>
+                    India's Leading Padel Court Builder
                 </div>
-                <p class="court-caption">Interactive 3D Model &mdash; <span>Drag to rotate</span>, scroll to zoom</p>
+
+                <h1 class="hero-title">
+                    <span class="title-line">
+                        <span class="title-line-inner" id="titleLine1">The Ball Is</span>
+                    </span>
+                    <span class="title-line">
+                        <span class="title-line-inner title-accent" id="titleLine2">In Your</span>
+                    </span>
+                    <span class="title-line">
+                        <span class="title-line-inner title-outline" id="titleLine3">Court</span>
+                    </span>
+                </h1>
+
+                <p class="hero-subtitle" id="heroSubtitle">
+                    From architectural vision to turnkey installation, we craft world-class
+                    padel facilities with FIP certification and an industry-leading 5-year warranty.
+                </p>
+
+                <div class="hero-stats" id="heroStats">
+                    <div class="stat-item">
+                        <div class="stat-value">1200+</div>
+                        <div class="stat-label">Courts Worldwide</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">50+</div>
+                        <div class="stat-label">Countries</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">5yr</div>
+                        <div class="stat-label">Warranty</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3D Court Visualization -->
+            <div class="hero-visual">
+                <div class="court-3d-wrapper" id="courtWrapper">
+                    <div class="court-glow"></div>
+                    <div class="court-container">
+                        <div class="court-loading" id="courtLoading">
+                            <div class="court-loading-spinner"></div>
+                            <span style="font-size: 0.85rem; color: var(--text-muted);">Loading 3D Model</span>
+                        </div>
+                        <iframe
+                            id="sketchfab-viewer"
+                            title="Padel Court 3D Model"
+                            allow="autoplay; fullscreen; xr-spatial-tracking"
+                            allowfullscreen
+                            mozallowfullscreen="true"
+                            webkitallowfullscreen="true">
+                        </iframe>
+                    </div>
+                </div>
+                <p class="court-caption">Interactive 3D Court — <span>Drag to explore</span></p>
             </div>
         </div>
     </section>
 
-    <!-- Form Section -->
-    <section class="form-section" id="quote">
-        <div class="form-container">
-            <div class="form-intro">
-                <h2>Ready to <span>Build?</span></h2>
-                <p>
-                    Get a detailed quote for your padel court project. Our team will reach out
-                    within 24 hours with a customized proposal.
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header" data-reveal>
+            <div class="section-eyebrow">Premium Quality</div>
+            <h2 class="section-title">Why Choose <span>Sky Padel?</span></h2>
+            <p class="section-desc">
+                International manufacturing standards, local expertise. We bring world-class
+                padel infrastructure to India with uncompromising quality.
+            </p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card" data-reveal>
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title">FIP Certified</h3>
+                <p class="feature-desc">
+                    All courts meet International Padel Federation standards with imported
+                    tempered glass and professional-grade artificial turf.
                 </p>
-                <div class="form-features">
-                    <div class="form-feature">
-                        <div class="form-feature-icon">
+            </div>
+
+            <div class="feature-card" data-reveal>
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <line x1="3" y1="9" x2="21" y2="9"/>
+                        <line x1="9" y1="21" x2="9" y2="9"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Turnkey Solutions</h3>
+                <p class="feature-desc">
+                    Complete end-to-end management from site assessment and design to
+                    installation, lighting, and ongoing maintenance.
+                </p>
+            </div>
+
+            <div class="feature-card" data-reveal>
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Live Tracking</h3>
+                <p class="feature-desc">
+                    Dedicated client portal with real-time milestone tracking, document
+                    management, and seamless payment processing.
+                </p>
+            </div>
+
+            <div class="feature-card" data-reveal>
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title">5-Year Warranty</h3>
+                <p class="feature-desc">
+                    Industry-leading anti-rust warranty backed by our commitment to
+                    long-term quality and customer satisfaction.
+                </p>
+            </div>
+
+            <div class="feature-card" data-reveal>
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                        <line x1="12" y1="22.08" x2="12" y2="12"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Global Manufacturing</h3>
+                <p class="feature-desc">
+                    Manufacturing facilities in Spain, America, and India ensuring
+                    consistent quality aligned with European standards.
+                </p>
+            </div>
+
+            <div class="feature-card" data-reveal>
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Expert Network</h3>
+                <p class="feature-desc">
+                    Post-sales services through our partner network spanning 50+ countries
+                    ensuring support wherever you are.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Form Section -->
+    <section class="quote-section" id="quote">
+        <div class="quote-court-lines"></div>
+
+        <div class="quote-container">
+            <div class="quote-intro" data-reveal="left">
+                <div class="quote-tagline">Start Your Project</div>
+                <h2 class="quote-title">Ready to <span>Build?</span></h2>
+                <p class="quote-desc">
+                    Get a detailed, no-obligation quote for your padel court project.
+                    Our team will reach out within 24 hours with a customized proposal.
+                </p>
+
+                <div class="quote-features">
+                    <div class="quote-feature">
+                        <div class="quote-feature-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                                 <polyline points="22 4 12 14.01 9 11.01"/>
                             </svg>
                         </div>
-                        <span>FIP Certified Courts</span>
+                        <span>Free site assessment & consultation</span>
                     </div>
-                    <div class="form-feature">
-                        <div class="form-feature-icon">
+                    <div class="quote-feature">
+                        <div class="quote-feature-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                                <line x1="3" y1="9" x2="21" y2="9"/>
-                                <line x1="9" y1="21" x2="9" y2="9"/>
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
                             </svg>
                         </div>
-                        <span>Complete Turnkey Solutions</span>
+                        <span>Detailed project timeline & milestones</span>
                     </div>
-                    <div class="form-feature">
-                        <div class="form-feature-icon">
+                    <div class="quote-feature">
+                        <div class="quote-feature-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
                             </svg>
                         </div>
-                        <span>5-Year Comprehensive Warranty</span>
+                        <span>Flexible payment options available</span>
                     </div>
                 </div>
             </div>
 
-            <div class="form-card">
-                <h3 class="form-title">Get Your Free Quote</h3>
-                <p class="form-subtitle">Fill the form and we'll get back to you within 24 hours</p>
+            <div class="quote-form-card" data-reveal="right">
+                <div class="form-header">
+                    <h3 class="form-title">Get Your Free Quote</h3>
+                    <p class="form-subtitle">We'll respond within 24 hours</p>
+                </div>
 
                 <?php if ($success): ?>
                     <div class="alert alert-success">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                             <polyline points="22 4 12 14.01 9 11.01"/>
                         </svg>
@@ -1139,7 +1805,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_lead'])) {
                     </div>
                 <?php elseif ($error): ?>
                     <div class="alert alert-error">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"/>
                             <line x1="12" y1="8" x2="12" y2="12"/>
                             <line x1="12" y1="16" x2="12.01" y2="16"/>
@@ -1160,6 +1826,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_lead'])) {
                             <input type="tel" name="clientPhone" class="form-input" placeholder="+91 XXXXX XXXXX" required>
                         </div>
                     </div>
+
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Email</label>
@@ -1170,6 +1837,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_lead'])) {
                             <input type="text" name="clientCompany" class="form-input" placeholder="Organization Name">
                         </div>
                     </div>
+
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">City</label>
@@ -1180,7 +1848,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_lead'])) {
                             <input type="text" name="siteState" class="form-input" placeholder="State">
                         </div>
                     </div>
-                    <div class="form-group full">
+
+                    <div class="form-group full-width">
                         <label class="form-label">Court Requirement</label>
                         <select name="courtRequirement" class="form-select">
                             <option value="">Select Configuration</option>
@@ -1191,55 +1860,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_lead'])) {
                             <option value="Not Sure">Not Sure - Need Consultation</option>
                         </select>
                     </div>
-                    <div class="form-group full">
-                        <label class="form-label">Additional Notes</label>
-                        <textarea name="notes" class="form-textarea" placeholder="Tell us about your project..."></textarea>
+
+                    <div class="form-group full-width">
+                        <label class="form-label">Project Details</label>
+                        <textarea name="notes" class="form-textarea" placeholder="Tell us about your vision..."></textarea>
                     </div>
-                    <button type="submit" name="submit_lead" class="btn-submit">Submit Inquiry</button>
+
+                    <button type="submit" name="submit_lead" class="btn-submit">
+                        Submit Inquiry
+                    </button>
                 </form>
                 <?php endif; ?>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features">
-        <div class="features-header">
-            <h2>Why <span>Sky Padel?</span></h2>
-            <p>International standards, local expertise. We bring world-class padel infrastructure to India.</p>
-        </div>
-
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                    </svg>
-                </div>
-                <h3 class="feature-title">Premium Quality</h3>
-                <p class="feature-desc">FIP certified courts with imported tempered glass and professional-grade artificial turf.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="3" width="18" height="18" rx="2"/>
-                        <line x1="3" y1="9" x2="21" y2="9"/>
-                        <line x1="9" y1="21" x2="9" y2="9"/>
-                    </svg>
-                </div>
-                <h3 class="feature-title">Turnkey Solutions</h3>
-                <p class="feature-desc">End-to-end management from site assessment to installation, lighting, and after-sales.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-                    </svg>
-                </div>
-                <h3 class="feature-title">Real-Time Tracking</h3>
-                <p class="feature-desc">Dedicated client portal with milestone tracking, documents, and payment management.</p>
             </div>
         </div>
     </section>
@@ -1247,8 +1878,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_lead'])) {
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <img src="https://cdn.prod.website-files.com/66c705c26941f009cfd3255f/66c70de3185822b627ec80ac_SKYPADEL_INDIA_LOGO.png" alt="Sky Padel India" class="footer-logo">
+            <a href="<?php echo SITE_URL; ?>">
+                <img src="https://cdn.prod.website-files.com/66c705c26941f009cfd3255f/66c70de3185822b627ec80ac_SKYPADEL_INDIA_LOGO.png" alt="Sky Padel India" class="footer-logo">
+            </a>
             <div class="footer-links">
+                <a href="#features" class="footer-link">Why Sky Padel</a>
                 <a href="#quote" class="footer-link">Get Quote</a>
                 <a href="<?php echo SITE_URL; ?>/login.php" class="footer-link">Client Portal</a>
             </div>
@@ -1260,7 +1894,322 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_lead'])) {
     <script src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
 
     <script>
-        // Initialize Sketchfab 3D Viewer
+        // =====================================================
+        // LENIS SMOOTH SCROLL
+        // =====================================================
+
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+
+        requestAnimationFrame(raf);
+
+        // GSAP ScrollTrigger integration
+        gsap.registerPlugin(ScrollTrigger);
+
+        lenis.on('scroll', ScrollTrigger.update);
+
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+
+        gsap.ticker.lagSmoothing(0);
+
+        // =====================================================
+        // LOADING SCREEN
+        // =====================================================
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+                loader.style.transition = 'opacity 0.5s, visibility 0.5s';
+
+                // Start hero animations
+                animateHero();
+            }, 2200);
+        });
+
+        // =====================================================
+        // CUSTOM CURSOR
+        // =====================================================
+
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursorDot');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.1;
+            cursorY += (mouseY - cursorY) * 0.1;
+
+            cursor.style.left = cursorX - 10 + 'px';
+            cursor.style.top = cursorY - 10 + 'px';
+
+            cursorDot.style.left = mouseX - 3 + 'px';
+            cursorDot.style.top = mouseY - 3 + 'px';
+
+            requestAnimationFrame(animateCursor);
+        }
+
+        animateCursor();
+
+        // Cursor hover effect
+        document.querySelectorAll('a, button, .feature-card').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // =====================================================
+        // HERO ANIMATIONS
+        // =====================================================
+
+        function animateHero() {
+            // Badge animation
+            gsap.to('#heroBadge', {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: 'expo.out'
+            });
+
+            // Title lines stagger
+            gsap.to('#titleLine1', {
+                y: 0,
+                duration: 1,
+                ease: 'expo.out',
+                delay: 0.2
+            });
+
+            gsap.to('#titleLine2', {
+                y: 0,
+                duration: 1,
+                ease: 'expo.out',
+                delay: 0.35
+            });
+
+            gsap.to('#titleLine3', {
+                y: 0,
+                duration: 1,
+                ease: 'expo.out',
+                delay: 0.5
+            });
+
+            // Subtitle
+            gsap.to('#heroSubtitle', {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: 'expo.out',
+                delay: 0.6
+            });
+
+            // Stats
+            gsap.to('#heroStats', {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: 'expo.out',
+                delay: 0.8
+            });
+
+            // Court 3D wrapper
+            gsap.from('#courtWrapper', {
+                rotateX: 20,
+                rotateY: -15,
+                scale: 0.9,
+                opacity: 0,
+                duration: 1.2,
+                ease: 'expo.out',
+                delay: 0.4
+            });
+        }
+
+        // =====================================================
+        // PARALLAX EFFECTS
+        // =====================================================
+
+        const parallaxLayers = document.querySelectorAll('[data-speed]');
+        const floatingBalls = document.querySelectorAll('.floating-ball');
+
+        lenis.on('scroll', ({ scroll }) => {
+            // Background parallax
+            parallaxLayers.forEach(layer => {
+                const speed = parseFloat(layer.dataset.speed);
+                layer.style.transform = `translateY(${scroll * speed}px)`;
+            });
+
+            // Floating balls parallax
+            floatingBalls.forEach(ball => {
+                const speed = parseFloat(ball.dataset.speed) || 0.3;
+                const yOffset = scroll * speed;
+                ball.style.transform = `translateY(${yOffset}px)`;
+            });
+        });
+
+        // Mouse parallax for balls
+        let ballMouseX = 0, ballMouseY = 0;
+        let ballTargetX = 0, ballTargetY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            ballMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+            ballMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        function animateBallsParallax() {
+            ballTargetX += (ballMouseX - ballTargetX) * 0.05;
+            ballTargetY += (ballMouseY - ballTargetY) * 0.05;
+
+            floatingBalls.forEach((ball, i) => {
+                const intensity = (i + 1) * 15;
+                const x = ballTargetX * intensity;
+                const y = ballTargetY * intensity;
+                ball.style.transform += ` translate(${x}px, ${y}px)`;
+            });
+
+            requestAnimationFrame(animateBallsParallax);
+        }
+
+        // Only run parallax on desktop
+        if (window.innerWidth > 768) {
+            animateBallsParallax();
+        }
+
+        // =====================================================
+        // FLOATING PARTICLES
+        // =====================================================
+
+        const particlesContainer = document.getElementById('particles');
+
+        function createParticles() {
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // =====================================================
+        // NAVBAR SCROLL EFFECT
+        // =====================================================
+
+        const nav = document.getElementById('nav');
+
+        lenis.on('scroll', ({ scroll }) => {
+            if (scroll > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // =====================================================
+        // SCROLL REVEAL ANIMATIONS
+        // =====================================================
+
+        const revealElements = document.querySelectorAll('[data-reveal]');
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // Feature cards stagger animation
+        const featureCards = document.querySelectorAll('.feature-card');
+
+        ScrollTrigger.batch(featureCards, {
+            onEnter: (elements) => {
+                gsap.to(elements, {
+                    opacity: 1,
+                    y: 0,
+                    stagger: 0.15,
+                    duration: 0.8,
+                    ease: 'expo.out'
+                });
+            },
+            start: 'top 85%'
+        });
+
+        // Quote section animations
+        ScrollTrigger.create({
+            trigger: '.quote-section',
+            start: 'top 70%',
+            onEnter: () => {
+                gsap.to('.quote-intro', {
+                    opacity: 1,
+                    x: 0,
+                    duration: 1,
+                    ease: 'expo.out'
+                });
+
+                gsap.to('.quote-form-card', {
+                    opacity: 1,
+                    x: 0,
+                    duration: 1,
+                    ease: 'expo.out',
+                    delay: 0.2
+                });
+            }
+        });
+
+        // =====================================================
+        // 3D COURT INTERACTION
+        // =====================================================
+
+        const courtWrapper = document.getElementById('courtWrapper');
+
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                const rect = courtWrapper.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                const rotateY = (e.clientX - centerX) / rect.width * 10;
+                const rotateX = (e.clientY - centerY) / rect.height * -10;
+
+                courtWrapper.style.transform = `rotateX(${10 + rotateX}deg) rotateY(${-5 + rotateY}deg)`;
+            });
+        }
+
+        // =====================================================
+        // SKETCHFAB VIEWER
+        // =====================================================
+
         (function() {
             var iframe = document.getElementById('sketchfab-viewer');
             var loading = document.getElementById('courtLoading');
@@ -1273,27 +2222,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_lead'])) {
                     api.start();
 
                     api.addEventListener('viewerready', function() {
-                        // Hide loading spinner
                         loading.classList.add('hidden');
 
-                        // Set dark background to match site theme
-                        api.setBackground({color: [0.02, 0.03, 0.06]}, function() {
-                            console.log('Background set to match site theme');
-                        });
-
-                        // Get initial camera position for reference
-                        api.getCameraLookAt(function(err, camera) {
-                            if (!err) {
-                                console.log('Camera ready:', camera);
-                            }
+                        api.setBackground({color: [0.027, 0.043, 0.071]}, function() {
+                            console.log('Background matched to site theme');
                         });
                     });
                 },
                 error: function() {
                     console.error('Sketchfab viewer failed to load');
-                    loading.innerHTML = '<p style="color: var(--text-secondary);">Failed to load 3D model</p>';
+                    loading.innerHTML = '<p style="color: var(--text-muted);">3D Model unavailable</p>';
                 },
-                autospin: 0.3,
+                autospin: 0.2,
                 autostart: 1,
                 camera: 0,
                 preload: 1,
@@ -1312,52 +2252,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_lead'])) {
                 ui_hint: 0,
                 ui_controls: 1,
                 scrollwheel: 1,
-                transparent: 0,
-                orbit_constraint_pitch_down: 0,
-                orbit_constraint_pitch_up: 1.2
+                transparent: 0
             });
         })();
 
-        // Navbar scroll effect
-        const nav = document.getElementById('nav');
-        window.addEventListener('scroll', () => {
-            nav.classList.toggle('scrolled', window.scrollY > 50);
-        });
+        // =====================================================
+        // SMOOTH SCROLL LINKS
+        // =====================================================
 
-        // Reveal on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    lenis.scrollTo(target, {
+                        offset: -100,
+                        duration: 1.2
+                    });
                 }
             });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.feature-card, .form-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(24px)';
-            el.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-            observer.observe(el);
         });
-
-        // Parallax on balls
-        let mx = 0, my = 0, cx = 0, cy = 0;
-        document.addEventListener('mousemove', e => {
-            mx = e.clientX / window.innerWidth - 0.5;
-            my = e.clientY / window.innerHeight - 0.5;
-        });
-
-        function animateBalls() {
-            cx += (mx - cx) * 0.06;
-            cy += (my - cy) * 0.06;
-            document.querySelectorAll('.ball').forEach((b, i) => {
-                const s = (i + 1) * 12;
-                b.style.transform = `translate(${cx * s}px, ${cy * s}px)`;
-            });
-            requestAnimationFrame(animateBalls);
-        }
-        animateBalls();
     </script>
 </body>
 </html>

@@ -1,0 +1,12 @@
+<?php
+// ============================================================================
+// Pump Inquiry - Admin Module Configuration
+// ============================================================================
+// This file configures the admin module for pump inquiries
+// It sets up the module variables required by the admin framework
+
+if (isset($_POST["xAction"])) {
+    // This is an AJAX POST request from admin form
+    require_once("../../../core/core.inc.php");
+}
+?>

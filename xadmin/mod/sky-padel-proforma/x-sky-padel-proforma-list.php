@@ -1,9 +1,19 @@
 <?php
+// invoiceStatus dropdown
+$invoiceStatusArr = array("" => "All", "Generated" => "Generated", "Sent" => "Sent", "Acknowledged" => "Acknowledged", "Paid" => "Paid", "Cancelled" => "Cancelled");
+$invoiceStatusOpt = '';
+$selInvoiceStatus = $_GET["invoiceStatus"] ?? "";
+foreach ($invoiceStatusArr as $k => $v) {
+    $sel = ($selInvoiceStatus == $k) ? ' selected="selected"' : '';
+    $invoiceStatusOpt .= '<option value="' . $k . '"' . $sel . '>' . $v . '</option>';
+}
+
+
 $arrSearch = array(
     array("type" => "text", "name" => "proformaID", "title" => "#ID", "where" => "AND p.proformaID=?", "dtype" => "i"),
     array("type" => "text", "name" => "proformaNo", "title" => "Proforma No", "where" => "AND p.proformaNo LIKE CONCAT('%',?,'%')", "dtype" => "s"),
     array("type" => "text", "name" => "clientName", "title" => "Client", "where" => "AND p.clientName LIKE CONCAT('%',?,'%')", "dtype" => "s"),
-    array("type" => "select", "name" => "invoiceStatus", "title" => "Status", "where" => "AND p.invoiceStatus=?", "dtype" => "s", "opt" => array("" => "All", "Generated" => "Generated", "Sent" => "Sent", "Acknowledged" => "Acknowledged", "Paid" => "Paid", "Cancelled" => "Cancelled"))
+    array("type" => "select", "name" => "invoiceStatus", "title" => "Status", "where" => "AND p.invoiceStatus=?", "dtype" => "s", "value" => $invoiceStatusOpt, "default" => false)
 );
 $MXFRM = new mxForm();
 $strSearch = $MXFRM->getFormS($arrSearch);
@@ -114,7 +124,7 @@ function sendProformaEmail(proformaID) {
                 xAction: 'SEND_EMAIL',
                 modName: 'sky-padel-proforma',
                 proformaID: proformaID,
-                xToken: '<?php echo $_SESSION[SITEURL]["xToken"]; ?>'
+                xToken: '<?php echo $_SESSION[SITEURL]["CSRF_TOKEN"]; ?>'
             },
             dataType: 'json',
             success: function(res) {

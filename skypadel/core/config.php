@@ -10,15 +10,15 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Database Configuration
 define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'bombayengg');
+define('DB_USER', 'padelpark');
+define('DB_PASS', 'Padel@2024#Secure');
+define('DB_NAME', 'padelpark_bombayengg');
 define('DB_PREFIX', 'mx_');
 
 // Site Configuration
 define('SITE_NAME', 'Sky Padel India');
-define('SITE_URL', 'http://localhost/bes/skypadel');
-define('ADMIN_URL', 'http://localhost/bes/xadmin');
+define('SITE_URL', 'https://pp.paritoshajmera.com/skypadel');
+define('ADMIN_URL', 'https://pp.paritoshajmera.com/xadmin');
 
 // OTP Settings
 define('OTP_EXPIRY_MINUTES', 10);

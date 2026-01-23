@@ -1,9 +1,19 @@
 <?php
+// contractStatus dropdown
+$contractStatusArr = array("" => "All", "Pending Signature" => "Pending Signature", "Signed" => "Signed", "Cancelled" => "Cancelled");
+$contractStatusOpt = '';
+$selContractStatus = $_GET["contractStatus"] ?? "";
+foreach ($contractStatusArr as $k => $v) {
+    $sel = ($selContractStatus == $k) ? ' selected="selected"' : '';
+    $contractStatusOpt .= '<option value="' . $k . '"' . $sel . '>' . $v . '</option>';
+}
+
+
 $arrSearch = array(
     array("type" => "text", "name" => "contractID", "title" => "#ID", "where" => "AND c.contractID=?", "dtype" => "i"),
     array("type" => "text", "name" => "contractNo", "title" => "Contract No", "where" => "AND c.contractNo LIKE CONCAT('%',?,'%')", "dtype" => "s"),
     array("type" => "text", "name" => "clientName", "title" => "Client", "where" => "AND c.clientName LIKE CONCAT('%',?,'%')", "dtype" => "s"),
-    array("type" => "select", "name" => "contractStatus", "title" => "Status", "where" => "AND c.contractStatus=?", "dtype" => "s", "opt" => array("" => "All", "Pending Signature" => "Pending Signature", "Signed" => "Signed", "Cancelled" => "Cancelled"))
+    array("type" => "select", "name" => "contractStatus", "title" => "Status", "where" => "AND c.contractStatus=?", "dtype" => "s", "value" => $contractStatusOpt, "default" => false)
 );
 $MXFRM = new mxForm();
 $strSearch = $MXFRM->getFormS($arrSearch);

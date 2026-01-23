@@ -4,11 +4,11 @@ $arrSearch = array(
     array("type" => "text", "name" => "expenseID", "title" => "#ID", "where" => "AND expenseID=?", "dtype" => "i"),
     array("type" => "text", "name" => "projectID", "title" => "Project ID", "where" => "AND projectID=?", "dtype" => "i"),
     array("type" => "select", "name" => "expenseCategory", "title" => "Category",
-          "opt" => '<option value="">All</option><option value="Material">Material</option><option value="Labor">Labor</option><option value="Transport">Transport</option><option value="Equipment">Equipment</option><option value="Subcontractor">Subcontractor</option><option value="Other">Other</option>',
+          "value" => '<option value="">All</option><option value="Material">Material</option><option value="Labor">Labor</option><option value="Transport">Transport</option><option value="Equipment">Equipment</option><option value="Subcontractor">Subcontractor</option><option value="Other">Other</option>', "default" => false,
           "where" => "AND expenseCategory=?", "dtype" => "s"),
     array("type" => "text", "name" => "vendorName", "title" => "Vendor", "where" => "AND vendorName LIKE CONCAT('%',?,'%')", "dtype" => "s"),
     array("type" => "select", "name" => "paymentStatus", "title" => "Payment",
-          "opt" => '<option value="">All</option><option value="Pending">Pending</option><option value="Partial">Partial</option><option value="Paid">Paid</option>',
+          "value" => '<option value="">All</option><option value="Pending">Pending</option><option value="Partial">Partial</option><option value="Paid">Paid</option>', "default" => false,
           "where" => "AND paymentStatus=?", "dtype" => "s")
 );
 // END

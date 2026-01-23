@@ -37,15 +37,27 @@
 			font-weight: bold;
 		}
 	</style>
-	<script language="javascript" type="text/javascript" src="<?php echo SITEURL;?>/lib/js/jquery-3.3.1.min.js"></script>
+	<script language="javascript" type="text/javascript" src="<?php echo LIBURL;?>/js/jquery-3.3.1.min.js"></script>
 	<script language="javascript" type="text/javascript">
 		function setupPrint() {
-			
-			if (window.opener == null)
+
+			if (window.opener == null) {
+				$("#div-print").html('<p style="color:red;padding:20px;">Error: No opener window found. Please open print from the list page.</p>');
 				return;
+			}
+
+			if (typeof window.opener.$ === 'undefined') {
+				$("#div-print").html('<p style="color:red;padding:20px;">Error: jQuery not available in opener window.</p>');
+				return;
+			}
 
 			var tblClone = window.opener.$(".tbl-list:eq(0)").clone(true);
-			
+
+			if (tblClone.length === 0) {
+				$("#div-print").html('<p style="color:red;padding:20px;">Error: No table found to print.</p>');
+				return;
+			}
+
 			$("#div-print").append(tblClone);
 			$("#div-print a").each(function() {
 				$(this).parent().html($(this).text());
@@ -54,6 +66,11 @@
 				$(this).parent().remove();
 			});
 			$("#div-print .action,#div-print .noprint").remove();
+
+			// Auto-trigger print dialog after a short delay
+			setTimeout(function() {
+				window.print();
+			}, 500);
 		}
 	</script>
 </head>

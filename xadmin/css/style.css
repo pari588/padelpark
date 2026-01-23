@@ -53,6 +53,7 @@ p.e{margin:1px 0; padding:0; font-size:1.1rem; line-height:1.2rem; color:#e64446
 /*BTN CSS====================================================================*/
 .btn{display:inline-block; height:28px; min-width:80px; line-height:28px; padding:0px 8px; border:0px; cursor:pointer; text-transform:uppercase; transition:all ease-in-out 0.3s; vertical-align:top; text-align:center;}
 .btn i, .btn.fa{font-size:1.4rem;}
+.btn.fa{font-family:'FontAwesome' !important;}
 
 .btn:before{font-family:'FontAwesome';}
 .btn.ico{min-width:1px; height:auto; font-size:20px;}

@@ -196,9 +196,12 @@ if (isset($_POST["xAction"])) {
     require_once("../../core/core.inc.php");
     require_once("settings.inc.php");
     $chkLogin = true;
-    if ($_POST["xAction"] == "xLogin")
+    $ignoreToken = false;
+    if ($_POST["xAction"] == "xLogin") {
         $chkLogin = false;
-    $MXRES = mxCheckRequest($chkLogin);
+        $ignoreToken = true;
+    }
+    $MXRES = mxCheckRequest($chkLogin, $ignoreToken);
 
     if ($MXRES["err"] == 0) {
         switch ($_POST["xAction"]) {

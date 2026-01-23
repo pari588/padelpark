@@ -1,9 +1,19 @@
 <?php
+// quotationStatus dropdown
+$quotationStatusArr = array("" => "All", "Draft" => "Draft", "Sent" => "Sent", "Approved" => "Approved", "Rejected" => "Rejected");
+$quotationStatusOpt = '';
+$selQuotationStatus = $_GET["quotationStatus"] ?? "";
+foreach ($quotationStatusArr as $k => $v) {
+    $sel = ($selQuotationStatus == $k) ? ' selected="selected"' : '';
+    $quotationStatusOpt .= '<option value="' . $k . '"' . $sel . '>' . $v . '</option>';
+}
+
+
 $arrSearch = array(
     array("type" => "text", "name" => "quotationID", "title" => "#ID", "where" => "AND q.quotationID=?", "dtype" => "i"),
     array("type" => "text", "name" => "quotationNo", "title" => "Quotation No", "where" => "AND q.quotationNo LIKE CONCAT('%',?,'%')", "dtype" => "s"),
     array("type" => "text", "name" => "clientName", "title" => "Client", "where" => "AND l.clientName LIKE CONCAT('%',?,'%')", "dtype" => "s"),
-    array("type" => "select", "name" => "quotationStatus", "title" => "Status", "where" => "AND q.quotationStatus=?", "dtype" => "s", "opt" => array("" => "All", "Draft" => "Draft", "Sent" => "Sent", "Approved" => "Approved", "Rejected" => "Rejected"))
+    array("type" => "select", "name" => "quotationStatus", "title" => "Status", "where" => "AND q.quotationStatus=?", "dtype" => "s", "value" => $quotationStatusOpt, "default" => false)
 );
 $MXFRM = new mxForm();
 $strSearch = $MXFRM->getFormS($arrSearch);
