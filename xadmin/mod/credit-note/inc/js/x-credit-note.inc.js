@@ -26,16 +26,64 @@ $(document).ready(function() {
 
     // Distributor select change
     $('#distributorID').on('change', function() {
+        var distributorID = $(this).val();
         var selected = $(this).find('option:selected');
         $('#entityNameDisplay').val(selected.text());
         $('[name="entityName"]').val(selected.text());
+
+        // Fetch distributor details via AJAX
+        if (distributorID) {
+            $.mxajax({
+                url: MODINCURL,
+                data: {
+                    xAction: 'GET_ENTITY_DETAILS',
+                    entityType: 'Distributor',
+                    entityID: distributorID
+                }
+            }).then(function(res) {
+                console.log('Distributor AJAX response:', res);
+                if (res.err === 0 && res.data) {
+                    $('[name="entityGSTIN"]').val(res.data.gstin || '');
+                } else {
+                    console.error('Failed to fetch distributor details:', res.msg);
+                }
+            }).catch(function(err) {
+                console.error('AJAX error:', err);
+            });
+        } else {
+            $('[name="entityGSTIN"]').val('');
+        }
     });
 
     // Location select change
     $('#locationID').on('change', function() {
+        var locationID = $(this).val();
         var selected = $(this).find('option:selected');
         $('#entityNameDisplay').val(selected.text());
         $('[name="entityName"]').val(selected.text());
+
+        // Fetch location details via AJAX
+        if (locationID) {
+            $.mxajax({
+                url: MODINCURL,
+                data: {
+                    xAction: 'GET_ENTITY_DETAILS',
+                    entityType: 'Location',
+                    entityID: locationID
+                }
+            }).then(function(res) {
+                console.log('Location AJAX response:', res);
+                if (res.err === 0 && res.data) {
+                    $('[name="entityGSTIN"]').val(res.data.gstin || '');
+                } else {
+                    console.error('Failed to fetch location details:', res.msg);
+                }
+            }).catch(function(err) {
+                console.error('AJAX error:', err);
+            });
+        } else {
+            $('[name="entityGSTIN"]').val('');
+        }
     });
 
     // Customer name change

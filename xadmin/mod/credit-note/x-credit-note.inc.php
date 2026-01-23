@@ -37,8 +37,61 @@ function addCreditNote()
         $_POST["creditNoteNo"] = generateCreditNoteNo();
     }
 
-    // Calculate tax amounts
+    // Set default invoiceType if empty
+    if (empty($_POST["invoiceType"])) {
+        $_POST["invoiceType"] = "Other";
+    }
+
+    // Convert entity fields to entityID based on entityType
+    $entityType = $_POST["entityType"] ?? "Distributor";
+    if ($entityType == "Distributor") {
+        $_POST["entityID"] = intval($_POST["distributorID"] ?? 0);
+        unset($_POST["distributorID"], $_POST["locationID"], $_POST["customerName"]);
+    } elseif ($entityType == "Location") {
+        $_POST["entityID"] = intval($_POST["locationID"] ?? 0);
+        unset($_POST["distributorID"], $_POST["locationID"], $_POST["customerName"]);
+    } elseif ($entityType == "Customer") {
+        $_POST["entityID"] = 0; // Customer doesn't have ID
+        $_POST["entityName"] = trim($_POST["customerName"] ?? "");
+        unset($_POST["distributorID"], $_POST["locationID"], $_POST["customerName"]);
+    }
+
+    // Validation
+    $errors = array();
+
+    // Validate entity selection
+    if ($entityType == "Distributor" || $entityType == "Location") {
+        if (empty($_POST["entityID"]) || $_POST["entityID"] <= 0) {
+            $errors[] = "Please select a valid " . $entityType;
+        }
+    } elseif ($entityType == "Customer") {
+        if (empty($_POST["entityName"]) || trim($_POST["entityName"]) == "") {
+            $errors[] = "Please enter Customer Name";
+        }
+    }
+
+    // Validate entity name and GSTIN
+    if (empty($_POST["entityName"]) || trim($_POST["entityName"]) == "") {
+        $errors[] = "Entity Name is required";
+    }
+
+    if (empty($_POST["entityGSTIN"]) || trim($_POST["entityGSTIN"]) == "") {
+        $errors[] = "Entity GSTIN is required";
+    }
+
+    // Validate amounts
     $subtotal = floatval($_POST["subtotal"] ?? 0);
+    if ($subtotal <= 0) {
+        $errors[] = "Subtotal must be greater than 0";
+    }
+
+    // Return errors if any
+    if (!empty($errors)) {
+        setResponse(array("err" => 1, "msg" => implode(". ", $errors)));
+        return;
+    }
+
+    // Calculate tax amounts
     $discount = floatval($_POST["discountAmount"] ?? 0);
     $taxable = $subtotal - $discount;
     $cgstRate = floatval($_POST["cgstRate"] ?? 9);
@@ -114,8 +167,61 @@ function updateCreditNote()
         return;
     }
 
-    // Calculate tax amounts
+    // Set default invoiceType if empty
+    if (empty($_POST["invoiceType"])) {
+        $_POST["invoiceType"] = "Other";
+    }
+
+    // Convert entity fields to entityID based on entityType
+    $entityType = $_POST["entityType"] ?? "Distributor";
+    if ($entityType == "Distributor") {
+        $_POST["entityID"] = intval($_POST["distributorID"] ?? 0);
+        unset($_POST["distributorID"], $_POST["locationID"], $_POST["customerName"]);
+    } elseif ($entityType == "Location") {
+        $_POST["entityID"] = intval($_POST["locationID"] ?? 0);
+        unset($_POST["distributorID"], $_POST["locationID"], $_POST["customerName"]);
+    } elseif ($entityType == "Customer") {
+        $_POST["entityID"] = 0; // Customer doesn't have ID
+        $_POST["entityName"] = trim($_POST["customerName"] ?? "");
+        unset($_POST["distributorID"], $_POST["locationID"], $_POST["customerName"]);
+    }
+
+    // Validation
+    $errors = array();
+
+    // Validate entity selection
+    if ($entityType == "Distributor" || $entityType == "Location") {
+        if (empty($_POST["entityID"]) || $_POST["entityID"] <= 0) {
+            $errors[] = "Please select a valid " . $entityType;
+        }
+    } elseif ($entityType == "Customer") {
+        if (empty($_POST["entityName"]) || trim($_POST["entityName"]) == "") {
+            $errors[] = "Please enter Customer Name";
+        }
+    }
+
+    // Validate entity name and GSTIN
+    if (empty($_POST["entityName"]) || trim($_POST["entityName"]) == "") {
+        $errors[] = "Entity Name is required";
+    }
+
+    if (empty($_POST["entityGSTIN"]) || trim($_POST["entityGSTIN"]) == "") {
+        $errors[] = "Entity GSTIN is required";
+    }
+
+    // Validate amounts
     $subtotal = floatval($_POST["subtotal"] ?? 0);
+    if ($subtotal <= 0) {
+        $errors[] = "Subtotal must be greater than 0";
+    }
+
+    // Return errors if any
+    if (!empty($errors)) {
+        setResponse(array("err" => 1, "msg" => implode(". ", $errors)));
+        return;
+    }
+
+    // Calculate tax amounts
     $discount = floatval($_POST["discountAmount"] ?? 0);
     $taxable = $subtotal - $discount;
     $cgstRate = floatval($_POST["cgstRate"] ?? 9);
@@ -690,11 +796,63 @@ function getInvoiceList()
     setResponse(array("err" => 0, "invoices" => $invoices));
 }
 
+function getEntityDetails()
+{
+    global $DB, $MXRES;
+    $entityType = trim($_POST["entityType"] ?? "");
+    $entityID = intval($_POST["entityID"] ?? 0);
+
+    if (!$entityType || !$entityID) {
+        setResponse(array("err" => 1, "msg" => "Invalid parameters"));
+        return;
+    }
+
+    $data = array();
+
+    if ($entityType == "Distributor") {
+        $DB->vals = array($entityID, 1);
+        $DB->types = "ii";
+        $DB->sql = "SELECT companyName, gstin, billingAddress, billingState, billingStateCode FROM " . $DB->pre . "distributor WHERE distributorID=? AND status=?";
+        $result = $DB->dbRow();
+        if ($result) {
+            $data = array(
+                "name" => $result["companyName"],
+                "gstin" => $result["gstin"] ?? "",
+                "address" => $result["billingAddress"] ?? "",
+                "state" => $result["billingState"] ?? "",
+                "stateCode" => $result["billingStateCode"] ?? ""
+            );
+        }
+    } elseif ($entityType == "Location") {
+        $DB->vals = array($entityID, 1);
+        $DB->types = "ii";
+        $DB->sql = "SELECT locationName, gstin, address, state FROM " . $DB->pre . "pnp_location WHERE locationID=? AND status=?";
+        $result = $DB->dbRow();
+        if ($result) {
+            $data = array(
+                "name" => $result["locationName"],
+                "gstin" => $result["gstin"] ?? "",
+                "address" => $result["address"] ?? "",
+                "state" => $result["state"] ?? "",
+                "stateCode" => ""
+            );
+        }
+    }
+
+    if (!empty($data)) {
+        $MXRES["err"] = 0;
+        $MXRES["data"] = $data;
+        $MXRES["msg"] = "Entity details fetched successfully";
+    } else {
+        setResponse(array("err" => 1, "msg" => "Entity not found"));
+    }
+}
+
 // Handle AJAX actions
 if (isset($_POST["xAction"])) {
     require_once("../../../core/core.inc.php");
     require_once("../../inc/site.inc.php");
-    $MXRES = mxCheckRequest();
+    $MXRES = mxCheckRequest(true, true); // Session-based auth
     if ($MXRES["err"] == 0) {
         switch ($_POST["xAction"]) {
             case "ADD": addCreditNote(); break;
@@ -704,6 +862,7 @@ if (isset($_POST["xAction"])) {
             case "ADJUST": adjustCreditNote(); break;
             case "CREATE_FROM_INVOICE": createFromInvoice(); break;
             case "GET_INVOICE_LIST": getInvoiceList(); break;
+            case "GET_ENTITY_DETAILS": getEntityDetails(); break;
         }
     }
     echo json_encode($MXRES);

@@ -163,8 +163,8 @@ foreach ($statuses as $k => $v) {
                             </li>
                             <?php
                             $arrForm2 = array(
-                                array("type" => "text", "name" => "entityName", "value" => $D["entityName"] ?? "", "title" => "Entity Name", "params" => array("id" => "entityNameDisplay", "readonly" => true)),
-                                array("type" => "text", "name" => "entityGSTIN", "value" => $D["entityGSTIN"] ?? "", "title" => "GSTIN"),
+                                array("type" => "text", "name" => "entityName", "value" => $D["entityName"] ?? "", "title" => "Entity Name", "validate" => "required", "params" => array("id" => "entityNameDisplay", "readonly" => true)),
+                                array("type" => "text", "name" => "entityGSTIN", "value" => $D["entityGSTIN"] ?? "", "title" => "GSTIN", "validate" => "required"),
                                 array("type" => "select", "name" => "warehouseID", "value" => $warehouseOpt, "title" => "Warehouse (for stock)", "info" => '<span class="info">Stock will be restored to this warehouse</span>'),
                             );
                             echo $MXFRM->getForm($arrForm2);
@@ -283,9 +283,7 @@ foreach ($statuses as $k => $v) {
                 </tbody>
             </table>
 
-            <?php if ($isDraft): ?>
             <?php echo $MXFRM->closeForm(); ?>
-            <?php endif; ?>
         </form>
     </div>
 </div>
@@ -365,8 +363,11 @@ foreach ($statuses as $k => $v) {
 }
 </style>
 
-<script src="<?php echo ADMINURL; ?>/mod/credit-note/inc/js/x-credit-note.inc.js"></script>
 <script>
+// Define required JavaScript variables
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/credit-note/x-credit-note.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/credit-note/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
 var creditNoteID = <?php echo $id; ?>;
 var isDraft = <?php echo $isDraft ? 'true' : 'false'; ?>;
 var entityType = '<?php echo $D["entityType"] ?? "Distributor"; ?>';
@@ -385,3 +386,4 @@ $(document).ready(function() {
 });
 <?php endif; ?>
 </script>
+<script src="<?php echo ADMINURL; ?>/mod/credit-note/inc/js/x-credit-note.inc.js"></script>

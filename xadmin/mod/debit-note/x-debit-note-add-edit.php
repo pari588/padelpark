@@ -162,8 +162,8 @@ foreach ($paymentMethods as $k => $v) {
                             </li>
                             <?php
                             $arrForm2 = array(
-                                array("type" => "text", "name" => "entityName", "value" => $D["entityName"] ?? "", "title" => "Entity Name", "params" => array("id" => "entityNameDisplay", "readonly" => true)),
-                                array("type" => "text", "name" => "entityGSTIN", "value" => $D["entityGSTIN"] ?? "", "title" => "GSTIN"),
+                                array("type" => "text", "name" => "entityName", "value" => $D["entityName"] ?? "", "title" => "Entity Name", "validate" => "required", "params" => array("id" => "entityNameDisplay", "readonly" => true)),
+                                array("type" => "text", "name" => "entityGSTIN", "value" => $D["entityGSTIN"] ?? "", "title" => "GSTIN", "validate" => "required"),
                                 array("type" => "select", "name" => "warehouseID", "value" => $warehouseOpt, "title" => "Warehouse (for stock)", "info" => '<span class="info">Stock will be deducted from this warehouse</span>'),
                             );
                             echo $MXFRM->getForm($arrForm2);
@@ -282,9 +282,7 @@ foreach ($paymentMethods as $k => $v) {
                 </tbody>
             </table>
 
-            <?php if ($isDraft): ?>
             <?php echo $MXFRM->closeForm(); ?>
-            <?php endif; ?>
         </form>
     </div>
 </div>
@@ -360,8 +358,11 @@ foreach ($paymentMethods as $k => $v) {
 }
 </style>
 
-<script src="<?php echo ADMINURL; ?>/mod/debit-note/inc/js/x-debit-note.inc.js"></script>
 <script>
+// Define required JavaScript variables
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/debit-note/x-debit-note.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/debit-note/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
 var debitNoteID = <?php echo $id; ?>;
 var isDraft = <?php echo $isDraft ? 'true' : 'false'; ?>;
 var entityType = '<?php echo $D["entityType"] ?? "Distributor"; ?>';
@@ -373,3 +374,4 @@ var items = [];
 items = <?php echo json_encode($items); ?>;
 <?php endif; ?>
 </script>
+<script src="<?php echo ADMINURL; ?>/mod/debit-note/inc/js/x-debit-note.inc.js"></script>

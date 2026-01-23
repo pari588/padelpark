@@ -121,6 +121,7 @@ function getDNStatusBadge($status) {
                 echo $MXFRM->getForm($arrSearch);
                 ?>
             </ul>
+            <?php echo $MXFRM->closeForm(); ?>
         </form>
 
         <!-- List Header -->
