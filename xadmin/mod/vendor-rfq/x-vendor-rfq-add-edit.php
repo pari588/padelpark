@@ -361,3 +361,11 @@ function awardToVendor(quoteID, vendorID) {
     }
 }
 </script>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/vendor-rfq/x-vendor-rfq.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/vendor-rfq/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

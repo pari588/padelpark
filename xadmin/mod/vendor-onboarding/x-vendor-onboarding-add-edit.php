@@ -176,3 +176,11 @@ $(function(){
 });
 </script>
 <?php endif; ?>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/vendor-onboarding/x-vendor-onboarding.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/vendor-onboarding/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

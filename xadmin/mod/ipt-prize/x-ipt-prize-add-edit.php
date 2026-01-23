@@ -165,3 +165,11 @@ function calculateTDS() {
     document.getElementById('netDisplay').innerHTML = 'Rs. ' + net.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 </script>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/ipt-prize/x-ipt-prize.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/ipt-prize/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

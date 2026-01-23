@@ -37,6 +37,9 @@ $MXTOTREC = $DB->numRows;
     </div>
 </div>
 <script language="javascript" type="text/javascript">
+    // Define required JavaScript variables
+    var MODINCURL = '<?php echo ADMINURL; ?>/core-admin/mod/admin-menu/x-admin-menu.inc.php';
+
     $(document).ready(function(e) {
         $("a#reset-menu").click(function() {
             showMxLoader();

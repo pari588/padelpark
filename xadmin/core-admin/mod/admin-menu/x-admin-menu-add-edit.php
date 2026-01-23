@@ -57,3 +57,10 @@ $MXFRM = new mxForm();
         <?php echo $MXFRM->closeForm(); ?>
     </form>
 </div>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/core-admin/mod/admin-menu/x-admin-menu.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/core-admin/mod/admin-menu/';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

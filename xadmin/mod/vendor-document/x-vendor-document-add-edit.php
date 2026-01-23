@@ -152,3 +152,11 @@ function rejectDocument() {
 }
 </script>
 <?php endif; ?>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/vendor-document/x-vendor-document.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/vendor-document/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

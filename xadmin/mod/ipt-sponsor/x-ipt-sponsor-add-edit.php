@@ -93,3 +93,11 @@ $MXFRM = new mxForm();
         <?php echo $MXFRM->closeForm(); ?>
     </form>
 </div>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/ipt-sponsor/x-ipt-sponsor.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/ipt-sponsor/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

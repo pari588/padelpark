@@ -162,3 +162,11 @@ document.querySelector('[name="baseAmount"]').addEventListener('input', calculat
 document.querySelector('[name="discountAmount"]').addEventListener('input', calculateTotal);
 document.querySelector('[name="taxAmount"]').addEventListener('input', calculateTotal);
 </script>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/pnp-booking/x-pnp-booking.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/pnp-booking/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

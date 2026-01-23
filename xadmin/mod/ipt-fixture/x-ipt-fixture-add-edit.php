@@ -201,3 +201,11 @@ function saveResult() {
     });
 }
 </script>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/ipt-fixture/x-ipt-fixture.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/ipt-fixture/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

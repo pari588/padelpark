@@ -44,3 +44,11 @@ $MXFRM = new mxForm();
     font-style: italic;
 }
 </style>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/hsn-code/x-hsn-code.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/hsn-code/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

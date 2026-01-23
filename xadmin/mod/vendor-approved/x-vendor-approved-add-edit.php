@@ -25,3 +25,11 @@ setTimeout(function() {
     window.location.href = '<?php echo $redirectUrl; ?>';
 }, 100);
 </script>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/vendor-approved/x-vendor-approved.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/vendor-approved/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

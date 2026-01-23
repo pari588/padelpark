@@ -274,3 +274,11 @@ function calculateGrandTotal() {
 document.querySelectorAll('.equipment-row').forEach(bindRowEvents);
 calculateGrandTotal();
 </script>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/pnp-rental/x-pnp-rental.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/pnp-rental/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

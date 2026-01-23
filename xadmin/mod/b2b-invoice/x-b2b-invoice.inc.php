@@ -729,7 +729,7 @@ function restoreCreditNoteStockAuto($creditNoteID, $warehouseID, $creditNoteNo)
 if (isset($_POST["xAction"])) {
     require_once("../../../core/core.inc.php");
     require_once("../../inc/site.inc.php");
-    $MXRES = mxCheckRequest();
+    $MXRES = mxCheckRequest(true, true); // Session-based auth
     if ($MXRES["err"] == 0) {
         switch ($_POST["xAction"]) {
             case "CREATE_FROM_ORDER": createFromOrder(); break;

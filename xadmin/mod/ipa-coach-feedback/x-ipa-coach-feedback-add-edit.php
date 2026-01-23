@@ -243,3 +243,11 @@ $(document).ready(function() {
     });
 });
 </script>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/ipa-coach-feedback/x-ipa-coach-feedback.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/ipa-coach-feedback/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

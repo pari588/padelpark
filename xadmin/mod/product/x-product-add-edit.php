@@ -182,3 +182,11 @@ document.addEventListener('DOMContentLoaded', function() {
     font-style: italic;
 }
 </style>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/product/x-product.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/product/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

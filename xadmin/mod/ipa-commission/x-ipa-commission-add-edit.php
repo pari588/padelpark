@@ -244,3 +244,11 @@ function markPaid() {
 }
 <?php endif; ?>
 </script>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/ipa-commission/x-ipa-commission.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/ipa-commission/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

@@ -161,3 +161,11 @@ document.addEventListener('DOMContentLoaded', function() {
     margin-left: 10px;
 }
 </style>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/inventory-stock/x-inventory-stock.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/inventory-stock/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

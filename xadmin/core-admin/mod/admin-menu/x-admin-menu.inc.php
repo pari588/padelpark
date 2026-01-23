@@ -116,7 +116,8 @@ function updateAdminMenu()
 
 if (isset($_POST["xAction"])) {
     require_once("../../../../core/core.inc.php");
-    $MXRES = mxCheckRequest();
+    // Use ignoreToken=true since this is a session-based form, not JWT-based
+    $MXRES = mxCheckRequest(true, true);
     if ($MXRES["err"] == 0) {
         switch ($_POST["xAction"]) {
             case "ADD":

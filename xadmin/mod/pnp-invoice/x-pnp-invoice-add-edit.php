@@ -217,3 +217,11 @@ document.querySelector('[name="discountAmount"]')?.addEventListener('input', cal
 document.querySelector('[name="cgstRate"]')?.addEventListener('input', calculateTotal);
 document.querySelector('[name="sgstRate"]')?.addEventListener('input', calculateTotal);
 </script>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/pnp-invoice/x-pnp-invoice.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/pnp-invoice/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

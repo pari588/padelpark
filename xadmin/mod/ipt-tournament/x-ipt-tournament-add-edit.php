@@ -301,3 +301,11 @@ function updateIPARankings() {
 }
 </script>
 <?php } ?>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/ipt-tournament/x-ipt-tournament.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/ipt-tournament/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

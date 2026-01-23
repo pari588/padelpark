@@ -26,3 +26,11 @@ $MXFRM = new mxForm();
         <?php echo $MXFRM->closeForm(); ?>
     </form>
 </div>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/vendor-category/x-vendor-category.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/vendor-category/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

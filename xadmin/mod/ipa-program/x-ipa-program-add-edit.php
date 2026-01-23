@@ -74,3 +74,11 @@ $MXFRM = new mxForm();
         <?php echo $MXFRM->closeForm(); ?>
     </form>
 </div>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/ipa-program/x-ipa-program.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/ipa-program/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

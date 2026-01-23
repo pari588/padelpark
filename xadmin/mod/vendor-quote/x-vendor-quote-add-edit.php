@@ -365,3 +365,11 @@ $('#frmNotes').submit(function(e) {
     alert('Notes saved!');
 });
 </script>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/vendor-quote/x-vendor-quote.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/vendor-quote/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

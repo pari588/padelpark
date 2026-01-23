@@ -138,3 +138,11 @@ $MXFRM = new mxForm();
     </div>
 </div>
 <?php } ?>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/pnp-location/x-pnp-location.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/pnp-location/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>

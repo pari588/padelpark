@@ -302,3 +302,11 @@ function submitInvoice(e) {
     return false;
 }
 </script>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/b2b-invoice/x-b2b-invoice.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/b2b-invoice/';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+</script>
