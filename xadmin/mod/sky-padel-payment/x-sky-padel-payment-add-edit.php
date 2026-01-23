@@ -55,3 +55,11 @@ $MXFRM = new mxForm();
         <?php echo $MXFRM->closeForm(); ?>
     </form>
 </div>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/sky-padel-payment/x-sky-padel-payment.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/sky-padel-payment/';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+</script>

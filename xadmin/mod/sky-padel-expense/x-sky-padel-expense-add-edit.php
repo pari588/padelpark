@@ -190,3 +190,11 @@ document.addEventListener('DOMContentLoaded', function() {
     togglePaymentFields();
 });
 </script>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/sky-padel-expense/x-sky-padel-expense.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/sky-padel-expense/';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+</script>

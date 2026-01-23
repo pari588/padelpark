@@ -244,3 +244,11 @@ document.addEventListener('DOMContentLoaded', function() {
     recalculateAllMilestones();
 });
 </script>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/sky-padel-quotation/x-sky-padel-quotation.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/sky-padel-quotation/';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+</script>

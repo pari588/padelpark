@@ -226,3 +226,11 @@ function calculateAdvance() {
     document.querySelector('[name="advanceAmount"]').value = (amount * pct / 100).toFixed(2);
 }
 </script>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/sky-padel-contract/x-sky-padel-contract.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/sky-padel-contract/';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+</script>

@@ -111,7 +111,8 @@ function updateProjectPaymentStatus($projectID)
 if (isset($_POST["xAction"])) {
     require_once("../../../core/core.inc.php");
     require_once("../../inc/site.inc.php");
-    $MXRES = mxCheckRequest();
+    // Bypass JWT validation for admin AJAX requests (use PHP session auth instead)
+    $MXRES = mxCheckRequest(true, true);
     if ($MXRES["err"] == 0) {
         switch ($_POST["xAction"]) {
             case "ADD": addPayment(); break;

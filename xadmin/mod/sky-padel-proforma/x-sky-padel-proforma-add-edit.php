@@ -281,3 +281,11 @@ document.addEventListener('DOMContentLoaded', function() {
     cursor: pointer;
 }
 </style>
+
+<script>
+// Define required JavaScript variables for form submission
+var MODINCURL = '<?php echo ADMINURL; ?>/mod/sky-padel-proforma/x-sky-padel-proforma.inc.php';
+var MODURL = '<?php echo ADMINURL; ?>/mod/sky-padel-proforma/';
+var PAGETYPE = '<?php echo $TPL->pageType ?? "add"; ?>';
+var ADMINURL = '<?php echo ADMINURL; ?>';
+</script>
